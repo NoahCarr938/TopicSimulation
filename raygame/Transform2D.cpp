@@ -91,46 +91,72 @@ void Transform2D::addChild(Transform2D* child)
 
 bool Transform2D::removeChild(int index)
 {
-    //Exit the function if the index was out of bounds
+    //Check to see if the index is outside the bounds of our array
+    if (index < 0 || index >= m_childCount)
+    {
+        return false;
+    }
 
-    //Create variable to store if the child was removed
+    bool actorRemoved = false;
 
-    //Create a new temporary array with a size one less than our old array
-
-    //Create variable to access temporary array index
-
-    //Copy values from the old array to the new array except the child to delete
-        //If the child to delete was skipped, set the child removed variable to true.
-
-    //Set the old array to the new array and decrease the child count if the child was removed
-
-    //Set the child parent to null
-
-    //Delete the temporary array
-
-    //Return whether or not the removal was successful
+    //Create a new array with a size one less than our old array 
+    Transform2D** newArray = new Transform2D * [m_childCount - 1];
+    //Create variable to access tempArray index
+    int j = 0;
+    //Copy values from the old array to the new array
+    for (int i = 0; i < m_childCount; i++)
+    {
+        //If the current index is not the index that needs to be removed,
+        //add the value into the old array and increment j
+        if (i != index)
+        {
+            newArray[j] = m_children[i];
+            j++;
+        }
+        else
+        {
+            actorRemoved = true;
+        }
+    }
+    m_children[index]->m_parent = nullptr;
+    //Set the old array to be the tempArray
+    m_children = newArray;
+    m_childCount--;
+    return actorRemoved;
 }
 
 bool Transform2D::removeChild(Transform2D* child)
 {
-    //Exit the function if the child was null
+    //Check to see if the actor was null
+    if (!child)
+    {
+        return false;
+    }
 
-    //Create variable to store if the child was removed
-
-    //Create a new temporary array with a size one less than our old array
-
-    //Create variable to access temporary array index
-
-    //Copy values from the old array to the new array except the child to delete
-        //If the child to delete was skipped, set the child removed variable to true.
-
-    //Set the old array to the new array and decrease the child count if the child was removed
-
-    //Set the child parent to null
-
-    //Delete the temporary array
-
+    bool actorRemoved = false;
+    //Create a new array with a size one less than our old array
+    Transform2D** newArray = new Transform2D * [m_childCount - 1];
+    //Create variable to access tempArray index
+    int j = 0;
+    //Copy values from the old array to the new array
+    for (int i = 0; i < m_childCount; i++)
+    {
+        if (child != m_children[i])
+        {
+            newArray[j] = m_children[i];
+            j++;
+        }
+        else
+        {
+            actorRemoved = true;
+        }
+    }
+    child->m_parent = nullptr;
+    //Set the old array to the new array
+    m_children = newArray;
+    m_childCount--;
     //Return whether or not the removal was successful
+    return actorRemoved;
 }
 
 void Transform2D::setScale(MathLibrary::Vector2 scale)
