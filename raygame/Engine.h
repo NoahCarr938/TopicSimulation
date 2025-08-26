@@ -1,6 +1,7 @@
 #pragma once
 #include <Matrix3.h>
 #include "Actor.h"
+#include "DynamicArray.h"
 class Camera2D;
 class Scene;
 
@@ -110,6 +111,7 @@ private:
     static Scene** m_scenes;
     static int m_sceneCount;
     static DynamicArray<Actor*> m_actorsToDelete;
+    //DynamicArray<Actor*> m_ActorsToDelete;
     static int m_currentSceneIndex;
     static const int m_screenWidth = 700;
     static const int m_screenHeight = 800;

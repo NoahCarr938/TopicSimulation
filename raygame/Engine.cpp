@@ -5,7 +5,7 @@
 
 bool Engine::m_applicationShouldClose = false;
 Scene** Engine::m_scenes = new Scene*;
-DynamicArray<Actor*> Engine::m_actorsToDelete = DynamicArray<Actor*>();
+DynamicArray<Actor*> Engine::m_ActorsToDelete = DynamicArray<Actor*>();
 int Engine::m_sceneCount = 0;
 int Engine::m_currentSceneIndex = 0;
 
