@@ -5,7 +5,7 @@
 
 bool Engine::m_applicationShouldClose = false;
 Scene** Engine::m_scenes = new Scene*;
-DynamicArray<Actor*> Engine::m_ActorsToDelete = DynamicArray<Actor*>();
+DynamicArray<Actor*> Engine::m_actorsToDelete = DynamicArray<Actor*>();
 int Engine::m_sceneCount = 0;
 int Engine::m_currentSceneIndex = 0;
 
@@ -109,7 +109,7 @@ int Engine::addScene(Scene* scene)
 	//Copy the values from the old array to the new array
 
 	//Store the current index
-
+	int index = m_sceneCount;
 	//Set the last value in the new array to be the scene we want to add
 
 	//Sets the scene at the new index to be the scene passed in
@@ -119,6 +119,7 @@ int Engine::addScene(Scene* scene)
 	//Increase the scene count by one
 
 	//Return the index this scene is at
+	return index;
 }
 
 void Engine::addActorToDeletionList(Actor* actor)
@@ -140,22 +141,30 @@ void Engine::addActorToDeletionList(Actor* actor)
 bool Engine::removeScene(Scene* scene)
 {
 	//Exit the function if the scene was null
+	if (!scene)
+	{
+		return false;
+	}
 
 	//Create variable to store if the scene was removed
-
+	bool bSceneRemoved;
 	//Create a new temporary array with a size one less than our old array
-
+	Scene** tempArray = new Scene * [m_sceneCount - 1];
 	//Create variable to access temporary array index
-
+	int j = 0;
 	//Copy values from the old array to the new array except the scene to delete
 		//If the actor to delete was skipped, set the scene removed variable to true.
+	for (int i = 0; i < m_sceneCount; i++)
+	{
 
+	}
 
 	//Set the old array to the new array and decrease the scene count if the actor was removed
 
 	//Delete the temporary array
 
 	//Return whether or not the removal was successful
+	return bSceneRemoved;
 }
 
 void Engine::setCurrentScene(int index)
