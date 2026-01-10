@@ -103,20 +103,35 @@ int Engine::getCurrentSceneIndex()
 int Engine::addScene(Scene* scene)
 {
 	//If the scene is null then return before running any other logic
+	if (!scene)
+	{
+		return -1;
+	}
 
 	//Create a new array with a size one greater than our old array
+	// remember double pointer to modify pointers passed to a function Noah, or working with arrays and arrays of pointers!
+	// A single pointer for passing references to variables for funcs, managing dynamic memory such as newing and deleting, iterating through arrays/lists!
+	Scene** tempArray = new Scene * [m_sceneCount + 1];
 
 	//Copy the values from the old array to the new array
-
+	for (int i = 0; i < m_sceneCount; i++)
+	{
+		tempArray[i] = m_scenes[i];
+	}
 	//Store the current index
 	int index = m_sceneCount;
+
 	//Set the last value in the new array to be the scene we want to add
 
-	//Sets the scene at the new index to be the scene passed in
 
+	//Sets the scene at the new index to be the scene passed in
+	tempArray[index] = scene;
+	delete m_scenes;
 	//Set old array to hold the values of the new array
+	m_scenes = tempArray;
 
 	//Increase the scene count by one
+	m_sceneCount++;
 
 	//Return the index this scene is at
 	return index;
@@ -147,21 +162,35 @@ bool Engine::removeScene(Scene* scene)
 	}
 
 	//Create variable to store if the scene was removed
-	bool bSceneRemoved;
+	bool bSceneRemoved = false;
 	//Create a new temporary array with a size one less than our old array
 	Scene** tempArray = new Scene * [m_sceneCount - 1];
 	//Create variable to access temporary array index
 	int j = 0;
 	//Copy values from the old array to the new array except the scene to delete
-		//If the actor to delete was skipped, set the scene removed variable to true.
+	//If the actor to delete was skipped, set the scene removed variable to true.
 	for (int i = 0; i < m_sceneCount; i++)
 	{
-
+		if (tempArray[i] != scene)
+		{
+			tempArray[j] = m_scenes[i];
+			j++;
+		}
+		else
+		{
+			bSceneRemoved = true;
+		}
 	}
 
 	//Set the old array to the new array and decrease the scene count if the actor was removed
+	if (bSceneRemoved)
+	{
+		m_scenes = tempArray;
+		m_sceneCount--;
+	}
 
-	//Delete the temporary array
+	//Delete the temporary array, not doing this for now
+	delete tempArray;
 
 	//Return whether or not the removal was successful
 	return bSceneRemoved;
